@@ -38,21 +38,11 @@ namespace dacpacModifier
                         // Check the Namespace Name is as expected
                         if (string.Compare(dacOriginXml.Root.Name.NamespaceName, Constants.DacOriginXmlns, StringComparison.Ordinal) == 0)
                         {
-                            if (args.Verbose)
-                            {
-                                Console.WriteLine("Origin Xml Part NamespaceName = {0}", dacOriginXml.Root.Name.NamespaceName);
-                                Console.WriteLine("Stored Origin NamespaceName = {0}", Constants.DacOriginXmlns);
-                            }
                             counter += 1;
                         }
                         // Check the root node has the correct name
                         if (string.Compare(dacOriginXml.Root.Name.LocalName, Constants.DacOriginRoot, StringComparison.Ordinal) == 0)
                         {
-                            if (args.Verbose)
-                            {
-                                Console.WriteLine("Origin Root Name = {0}", dacOriginXml.Root.Name.LocalName);
-                                Console.WriteLine("Stored Origin Root Name = {0}", Constants.DacOriginRoot);
-                            }
                             counter += 1;
                         }
 
@@ -66,11 +56,6 @@ namespace dacpacModifier
                         {
                             if (string.Compare(e.ps, Constants.DacOriginXmlns, StringComparison.Ordinal) == 0)
                             {
-                                if (args.Verbose)
-                                {
-                                    Console.WriteLine("ProducSchema Xml Namespace = {0}", e.ps);
-                                    Console.WriteLine("Stored ProducSchema Namespace = {0}", Constants.DacOriginXmlns);
-                                }
                                 counter += 1;
                             }
                         }

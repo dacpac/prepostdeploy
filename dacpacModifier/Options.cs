@@ -24,7 +24,7 @@ namespace dacpacModifier
         {
             var help = new HelpText
             {
-                Heading = new HeadingInfo("dacpacPrePostDeploy", "v 0.1"),
+                Heading = new HeadingInfo("dacpacPrePostDeploy", "v 0.2"),
                 Copyright = new CopyrightInfo("Craig Ottley-Thistlethwaite", DateTime.Now.Year),
                 AdditionalNewLineAfterOption = true,
                 AddDashesToOption = true

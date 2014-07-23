@@ -39,7 +39,7 @@ namespace dacpacModifier
 
             if (args.PreDeployFile != null)
             {
-                Console.WriteLine("Pre Deploy File");
+                Console.WriteLine("~ Pre Deploy ~");
                 string[] _predeployscript = args.PreDeployFile.Split(';').Distinct().ToArray();
                 if (_predeployscript.Count() > 1)
                 {
@@ -57,15 +57,11 @@ namespace dacpacModifier
                     // Override the file
                     PreDeploy.overridePreDeployFile(fi, _predeployscript[0], args);
                 }
-                if (args.Verbose)
-                {
-                    OutputToConsole(args);
-                }
             }
 
             if (args.PostDeployFile != null)
             {
-                Console.WriteLine("Post Deploy File");
+                Console.WriteLine("~ Post Deploy File ~");
                 string[] _postdeployscript = args.PostDeployFile.Split(';').Distinct().ToArray();
                 if (_postdeployscript.Count() > 1)
                 {
@@ -84,11 +80,6 @@ namespace dacpacModifier
                     PostDeploy.overridePostDeployFile(fi, _postdeployscript[0], args);
                 }
 
-                if (args.Verbose)
-                {
-                    OutputToConsole(args);
-                }
-
             }
 
         }
@@ -96,16 +87,6 @@ namespace dacpacModifier
         public static void OutputToConsole(Options args)
         {
             Console.WriteLine("Input File: {0}", args.InputFile);
-
-            if (args.PreDeployFile != null)
-            {
-                Console.WriteLine("Overriding Pre Deployment Script with: {0}", args.PreDeployFile);
-            }
-
-            if (args.PostDeployFile != null)
-            {
-                Console.WriteLine("Overriding Post Deployment Script with: {0}", args.PostDeployFile);
-            }
         }
 
     }

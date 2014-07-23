@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Packaging;
+using System.Net.Mime;
 
 namespace dacpacModifier
 {
@@ -14,11 +15,41 @@ namespace dacpacModifier
         /// <param name="args"></param>
         public static void overridePreDeployFile(FileInfo InputFile, string PreDeployFile, Options args)
         {
-            Package dacpac = Package.Open(InputFile.FullName, FileMode.Open);
+            Package dacpac = Package.Open(InputFile.FullName, FileMode.OpenOrCreate);
+            PackagePartCollection _parts;
+            bool _IsPreDeployFile = false;
             try
             {
+                _parts = dacpac.GetParts();
+
+                foreach (PackagePart _part in _parts)
+                {
+                    if (_part.Uri.ToString() == Constants.PreDeployUri)
+                    {
+                        _IsPreDeployFile = true;
+                    }
+
+                }
+
                 Uri preDeployUri = PackUriHelper.CreatePartUri(new Uri(Constants.PreDeployUri, UriKind.Relative));
-                PackagePart dacPreDeployPart = dacpac.GetPart(preDeployUri);
+                PackagePart dacPreDeployPart;
+
+                if (_IsPreDeployFile == true)
+                {
+                    if (args.Verbose)
+                    {
+                        Console.WriteLine("Pre Deployment Script Found, Overriding predeploy.sql with contents from: {0}", args.PreDeployFile);
+                    }
+                    dacPreDeployPart = dacpac.GetPart(preDeployUri);
+                }
+                else
+                {
+                    if (args.Verbose)
+                    {
+                        Console.WriteLine("Pre Deployment Script Not Found inside dacpac, Creating predeploy.sql with contents from: {0}", args.PreDeployFile);
+                    }
+                    dacPreDeployPart = dacpac.CreatePart(preDeployUri, MediaTypeNames.Text.Plain);
+                }
 
                 using (FileStream fileStream = new FileStream(
                         PreDeployFile.ToString(), FileMode.Open, FileAccess.Read))
