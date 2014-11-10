@@ -15,6 +15,7 @@ namespace dacpacModifier
         /// <param name="args">The parsed arguments</param>
         public static void Modify(Options args)
         {
+            #region Checks
             // Check to see if anything has been supplied for input file
             if (string.IsNullOrEmpty(args.InputFile))
             {
@@ -32,11 +33,14 @@ namespace dacpacModifier
                 throw new FileFormatException(Constants.ErrorNotAValidDacpac);
             }
 
-            if (args.PreDeployFile == null && args.PostDeployFile == null)
+            if (args.PreDeployFile == null && args.PostDeployFile == null &&
+                args.ChecksumPreDeployFile == false && args.ChecksumPostDeployFile == false)
             {
                 throw new InvalidOperationException(Constants.ErrorNoPreOrPostDeployFile);
             }
+            #endregion
 
+            #region Pre Deploy File Override
             if (args.PreDeployFile != null)
             {
                 Console.WriteLine("~ Pre Deploy ~");
@@ -44,7 +48,6 @@ namespace dacpacModifier
                 if (_predeployscript.Count() > 1)
                 {
                     throw new InvalidOperationException(Constants.ErrorMoreThanOnePrePostDeployFile);
-
                 }
 
                 Boolean DoesExist = File.Exists(_predeployscript[0]);
@@ -58,7 +61,18 @@ namespace dacpacModifier
                     PreDeploy.overridePreDeployFile(fi, _predeployscript[0], args);
                 }
             }
+            #endregion
 
+            #region Checksum Pre Deploy File
+            if (args.ChecksumPreDeployFile)
+            {
+                Console.WriteLine("~ Checksum Pre Deploy ~");
+                // Generate Checksum
+                PreDeployChecksum.createPreDeployChecksumElement(fi, args);
+            }
+            #endregion
+
+            #region Post Deploy File Override
             if (args.PostDeployFile != null)
             {
                 Console.WriteLine("~ Post Deploy File ~");
@@ -66,7 +80,6 @@ namespace dacpacModifier
                 if (_postdeployscript.Count() > 1)
                 {
                     throw new InvalidOperationException(Constants.ErrorMoreThanOnePrePostDeployFile);
-
                 }
 
                 Boolean DoesExist = File.Exists(_postdeployscript[0]);
@@ -81,7 +94,16 @@ namespace dacpacModifier
                 }
 
             }
+            #endregion
 
+            #region Checksum Post Deploy File
+            if (args.ChecksumPostDeployFile)
+            {
+                Console.WriteLine("~ Checksum Post Deploy ~");
+                // Generate Checksum
+                PostDeployChecksum.createPostDeployChecksumElement(fi, args);
+            }
+            #endregion
         }
 
         public static void OutputToConsole(Options args)

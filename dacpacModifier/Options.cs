@@ -16,6 +16,12 @@ namespace dacpacModifier
         [Option("PostDeployFile", HelpText = "The path to the Post Deploy Script file that will be overridden in the dacpac if one if provided")]
         public string PostDeployFile { get; set; }
 
+        [Option("ChecksumPreDeployFile", HelpText = "Use this bool option to create a Checksum for the predeploy.sql file inside of the dacpac")]
+        public bool ChecksumPreDeployFile { get; set; }
+
+        [Option("ChecksumPostDeployFile", HelpText = "Use this bool option to create a Checksum for the postdeploy.sql file inside of the dacpac")]
+        public bool ChecksumPostDeployFile { get; set; }
+
         [Option('v', "verbose", HelpText = "Print details during execution.")]
         public bool Verbose { get; set; }
 
@@ -24,7 +30,7 @@ namespace dacpacModifier
         {
             var help = new HelpText
             {
-                Heading = new HeadingInfo("dacpacPrePostDeploy", "v 0.2"),
+                Heading = new HeadingInfo("dacpacPrePostDeploy", "v 0.3"),
                 Copyright = new CopyrightInfo("Craig Ottley-Thistlethwaite", DateTime.Now.Year),
                 AdditionalNewLineAfterOption = true,
                 AddDashesToOption = true

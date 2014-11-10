@@ -70,7 +70,9 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Modifier.cs" />
     <Compile Include="Options.cs" />
+    <Compile Include="PostDeployChecksum.cs" />
     <Compile Include="PostDeploy.cs" />
+    <Compile Include="PreDeployChecksum.cs" />
     <Compile Include="PreDeploy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
