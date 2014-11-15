@@ -60,8 +60,9 @@ namespace dacpacModifier
                             }
                         }
 
-                        XElement checkSum = (from cs in dacOriginXml.Descendants(xmls + "Checksums")
-                                             select cs).FirstOrDefault();
+                        var checkSum = dacOriginXml.Root.Descendants(xmls + "Checksums").Elements(xmls + "Checksum")
+                                                   .Where(x => x.Attribute("Uri").Value == Constants.ModelXmlUri)
+                                                   .FirstOrDefault();
 
                         if (checkSum != null)
                         {
