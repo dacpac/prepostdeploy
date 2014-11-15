@@ -1,4 +1,4 @@
-modifier
+Pre/Post Deploy
 ========
 
-dacpac modifier will help modify dacpac's when trying to do stuff that doesn't come out of the box with SqlPackage
+Please look at the wiki on how to use this utility. 
